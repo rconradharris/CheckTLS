@@ -19,9 +19,13 @@ class CheckTLSView extends WatchUi.View {
     function onShow() {
     }
 
+    private function isResponseOK(test, responseCode) {
+        return (responseCode == test[:expected]);
+    }
+
     private function formatResponseCode(test, responseCode) {
         var msg = "ERROR";
-        if (responseCode == 200) {
+        if (self.isResponseOK(test, responseCode)) {
             msg = "OK";
         } else if (responseCode == 0) {
             msg = "FAIL";
@@ -31,7 +35,7 @@ class CheckTLSView extends WatchUi.View {
 
     private function drawResult(dc, x, y, font, test, responseCode) {
         var text = self.formatResponseCode(test, responseCode);
-        if (responseCode == 200) {
+        if (self.isResponseOK(test, responseCode)) {
             dc.setColor(Graphics.COLOR_GREEN, Graphics.COLOR_BLACK);
         } else {
             dc.setColor(Graphics.COLOR_RED, Graphics.COLOR_BLACK);
