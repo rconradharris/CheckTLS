@@ -48,7 +48,7 @@ class CheckTLSView extends WatchUi.View {
         if (ds.isTouchScreen) {
             return "Tap to Begin";
         }
-        return "Click Start/Stop\nto Begin";
+        return "Click START\nto Begin";
     }
 
     // Update the view

@@ -1,6 +1,6 @@
-using Toybox.Communications;
-using Toybox.System;
-using Toybox.WatchUi;
+import Toybox.Communications;
+import Toybox.Lang;
+import Toybox.WatchUi;
 
 class CheckTLSDelegate extends WatchUi.BehaviorDelegate {
 
@@ -9,14 +9,7 @@ class CheckTLSDelegate extends WatchUi.BehaviorDelegate {
     }
 
     function onSelect() {
-        System.println("onSelect");
         Communications.startSync();
         return true;
     }
-
-    function onMenu() {
-        WatchUi.pushView(new Rez.Menus.MainMenu(), new CheckTLSMenuDelegate(), WatchUi.SLIDE_UP);
-        return true;
-    }
-
 }

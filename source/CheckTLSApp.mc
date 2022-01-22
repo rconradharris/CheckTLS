@@ -1,12 +1,16 @@
-using Toybox.Application;
-using Toybox.Application.Storage;
-using Toybox.Communications;
-using Toybox.System;
-using Toybox.WatchUi;
+import Toybox.Application;
+import Toybox.Lang;
+import Toybox.WatchUi;
 
 class CheckTLSApp extends Application.AppBase {
-
     private const TESTS = [
+        {
+            :shortname => "DigiCert CA-2 G2",
+            :fullname => "DigiCert Baltimore CA-2 G2",
+            :serial => "08 62 92 85 76 CC 7F 86 5D 1F 7F DF 35 32 58 0D",
+            :url => "https://garmin-check-tls.s3.amazonaws.com/test.json",
+            :expected => 200
+        },
         {
             :shortname => "Comodo ECC",
             :fullname => "COMODO ECC Certification Authority",
@@ -22,9 +26,9 @@ class CheckTLSApp extends Application.AppBase {
             :expected => 200
         },
         {
-            :shortname => "USERTrust RSA",
-            :fullname => "USERTrust RSA Certification Authority",
-            :serial => "01 FD 6D 30 FC A3 CA 51 A8 1B BC 64 0E 35 03 2D",
+            :shortname => "Sectigo RSA",
+            :fullname => "Sectigo RSA Domain Validation Secure Server CA",
+            :serial => "00 D3 83 BD 9C 5B 36 89 60 BE 39 AA FD 58 23 00 71",
             :url => "https://runcasts.com/garmin/v1/ping",
             :expected => 200
         },
@@ -36,21 +40,6 @@ class CheckTLSApp extends Application.AppBase {
             :expected => 403
         }
     ];
-
-    function initialize() {
-        AppBase.initialize();
-        System.println("initialize");
-    }
-
-    // onStart() is called on application start up
-    function onStart(state) {
-        System.println("onStart");
-        self.clearResponseCodes();
-    }
-
-    // onStop() is called when your application is exiting
-    function onStop(state) {
-    }
 
     function onSyncDone() {
         WatchUi.switchToView(new CheckTLSView(), new CheckTLSDelegate(), WatchUi.SLIDE_IMMEDIATE);
@@ -79,9 +68,27 @@ class CheckTLSApp extends Application.AppBase {
         return (r != null) ? r : [];
     }
 
-    // Return the initial view of your application here
-    function getInitialView() {
-        return [ new CheckTLSView(), new CheckTLSDelegate() ];
+    // Start
+    function initialize() {
+        AppBase.initialize();
     }
 
+    // onStart() is called on application start up
+    function onStart(state as Dictionary?) as Void {
+        self.clearResponseCodes();
+    }
+
+    // onStop() is called when your application is exiting
+    function onStop(state as Dictionary?) as Void {
+    }
+
+    // Return the initial view of your application here
+    function getInitialView() as Array<Views or InputDelegates>? {
+        return [ new CheckTLSView(), new CheckTLSDelegate() ] as Array<Views or InputDelegates>;
+    }
+
+}
+
+function getApp() as CheckTLSApp {
+    return Application.getApp() as CheckTLSApp;
 }
